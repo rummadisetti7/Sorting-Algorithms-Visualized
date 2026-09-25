@@ -5,7 +5,7 @@ JavaScript. No frameworks, no build tools, no external dependencies &mdash;
 open `index.html` and it runs.
 
 **[Live view]** — once deployed to GitHub Pages, this will be at
-`https://<username>.github.io/<repository>/`
+`https://rummadisetti7.github.io/Sorting-Algorithms-Visualized/`
 
 ## Algorithms
 
