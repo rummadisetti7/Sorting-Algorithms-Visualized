@@ -103,9 +103,6 @@ js/
 
 HTML, CSS, JavaScript. Nothing else.
 
-## Running locally
-
-Just open `index.html` in a browser. No server, no build step required.
 
 ## Deployment
 
