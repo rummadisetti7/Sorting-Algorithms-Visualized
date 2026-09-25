@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorting Visualizer &mdash; Step Through DSA</title>
+<meta name="description" content="An interactive, step-by-step sorting algorithm visualizer for learning DSA. Bubble, Selection, Insertion, Merge and Quick sort.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="app-header">
+  <div class="app-header__inner">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">01</span>
+      <div>
+        <h1 class="brand__title">Sorting Visualizer</h1>
+        <p class="brand__tagline">Walk through five sorting algorithms, one operation at a time.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main-content" class="app-main">
+
+  <section class="panel controls-panel" aria-label="Algorithm and array controls">
+    <div class="field">
+      <label for="algorithm-select">Algorithm</label>
+      <select id="algorithm-select">
+        <option value="bubble">Bubble Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="insertion">Insertion Sort</option>
+        <option value="merge">Merge Sort</option>
+        <option value="quick">Quick Sort</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="array-size">Array size &mdash; <span id="array-size-value">20</span> elements</label>
+      <input type="range" id="array-size" min="5" max="50" value="20" step="1">
+    </div>
+
+    <div class="field field--inline">
+      <button id="randomize-btn" class="btn btn--primary" type="button">New random array</button>
+    </div>
+
+    <div class="field">
+      <label for="custom-array-input">Custom array <span class="field__hint">(comma or space separated)</span></label>
+      <div class="input-row">
+        <input type="text" id="custom-array-input" placeholder="e.g. 5, 2, 8, 1, 9, 3" autocomplete="off" spellcheck="false">
+        <button id="apply-custom-array-btn" class="btn" type="button">Apply</button>
+      </div>
+      <p class="field__error" id="custom-array-error" role="alert" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="panel visualization-panel" aria-label="Sorting visualization">
+    <div class="bars-container" id="bars-container" role="img" aria-label="Bar chart representing the array being sorted"></div>
+
+    <div class="legend" id="legend" aria-hidden="true">
+      <span class="legend__item"><i class="legend__swatch legend__swatch--compare"></i>Comparing</span>
+      <span class="legend__item"><i class="legend__swatch legend__swatch--swap"></i>Swapping</span>
+      <span class="legend__item"><i class="legend__swatch legend__swatch--pivot"></i>Pivot</span>
+      <span class="legend__item"><i class="legend__swatch legend__swatch--sorted"></i>Sorted</span>
+    </div>
+
+    <div class="playback" role="group" aria-label="Playback controls">
+      <button id="btn-first" class="btn btn--icon" type="button" aria-label="Jump to first step">&#8676;</button>
+      <button id="btn-prev" class="btn btn--icon" type="button" aria-label="Previous step">&#8592;</button>
+      <button id="btn-play" class="btn btn--primary btn--play" type="button" aria-label="Play">&#9654; Play</button>
+      <button id="btn-next" class="btn btn--icon" type="button" aria-label="Next step">&#8594;</button>
+      <button id="btn-last" class="btn btn--icon" type="button" aria-label="Jump to last step">&#8677;</button>
+      <button id="btn-reset" class="btn" type="button" aria-label="Reset">Reset</button>
+
+      <div class="speed-control">
+        <label for="speed-slider">Speed</label>
+        <input type="range" id="speed-slider" min="0" max="4" value="2" step="1">
+        <div class="speed-control__labels" aria-hidden="true"><span>Slow</span><span>Fast</span></div>
+      </div>
+    </div>
+
+    <div class="progress-track" aria-hidden="true">
+      <div class="progress-track__fill" id="progress-fill"></div>
+    </div>
+
+    <div class="stats-bar" id="stats-bar" aria-live="polite"></div>
+  </section>
+
+  <section class="panel explanation-panel" aria-label="Current step explanation" aria-live="polite">
+    <h2 class="panel__heading">Current step</h2>
+    <p class="step-message" id="step-message">Choose an algorithm, then press <strong>Play</strong> or <strong>Next</strong> to begin.</p>
+    <p class="step-code" id="step-code"></p>
+  </section>
+
+  <section class="panel info-panel" aria-label="Algorithm information">
+    <h2 class="info-panel__name" id="algo-name">&nbsp;</h2>
+    <p class="info-panel__description" id="algo-description"></p>
+
+    <table class="complexity-table" id="complexity-table">
+      <tbody>
+        <tr><th scope="row">Best case</th><td id="c-best"></td></tr>
+        <tr><th scope="row">Average case</th><td id="c-average"></td></tr>
+        <tr><th scope="row">Worst case</th><td id="c-worst"></td></tr>
+        <tr><th scope="row">Space</th><td id="c-space"></td></tr>
+        <tr><th scope="row">Stable</th><td id="c-stable"></td></tr>
+        <tr><th scope="row">In-place</th><td id="c-inplace"></td></tr>
+      </tbody>
+    </table>
+
+    <details class="pseudocode" id="pseudocode-details">
+      <summary>Pseudocode</summary>
+      <pre class="pseudocode__block" id="pseudocode-block"></pre>
+    </details>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  <p>Built with HTML, CSS and vanilla JavaScript &mdash; no frameworks, no dependencies.</p>
+</footer>
+
+<script src="js/traceBuilder.js"></script>
+<script src="js/algorithms/bubbleSort.js"></script>
+<script src="js/algorithms/selectionSort.js"></script>
+<script src="js/algorithms/insertionSort.js"></script>
+<script src="js/algorithms/mergeSort.js"></script>
+<script src="js/algorithms/quickSort.js"></script>
+<script src="js/state.js"></script>
+<script src="js/visualizer.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
